@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1060913787068",
+    "project_id": "smarttechdemo-5ad08",
+    "storage_bucket": "smarttechdemo-5ad08.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060913787068:android:335d1032ccf72bf201a0b9",
+        "android_client_info": {
+          "package_name": "com.netcore.smarttechdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060913787068-flt3il704d57db6e0njka6am3s4re30c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWEe9vHkkreLN-vQlwhmQsQ_LKKn54JZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060913787068-flt3il704d57db6e0njka6am3s4re30c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
