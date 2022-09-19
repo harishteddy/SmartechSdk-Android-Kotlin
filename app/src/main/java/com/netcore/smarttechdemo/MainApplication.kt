@@ -2,6 +2,8 @@ package com.netcore.smarttechdemo
 
 import android.app.Application
 import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.content.IntentFilter
 import android.text.TextUtils
 import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
@@ -28,17 +30,17 @@ class MainApplication:Application() {
         //firebase token fetch
 
 
-        /*  try {
+          try {
               val smartPush = SmartPush.getInstance(WeakReference(applicationContext))
               smartPush.fetchAlreadyGeneratedTokenFromFCM()
           } catch (e: Exception) {
               Log.e(TAG, "Fetching FCM token failed.")
-          }*/
+          }
         fetchFcmToken()
 
-        /*   val deeplinkReceiver = DeeplinkReceiver()
+           val deeplinkReceiver = DeeplinkReceiver()
             val filter = IntentFilter("com.smartech.EVENT_PN_INBOX_CLICK")
-            registerReceiver(deeplinkReceiver, filter)*/
+            registerReceiver(deeplinkReceiver, filter)
 
 
 
