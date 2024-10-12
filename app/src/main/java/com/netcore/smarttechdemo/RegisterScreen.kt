@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.netcore.android.Smartech
 import com.netcore.android.smartechappinbox.SmartechAppInbox
 import com.netcore.android.smartechappinbox.network.listeners.SMTInboxCallback
 import com.netcore.android.smartechappinbox.network.model.SMTInboxMessageData
@@ -64,26 +65,9 @@ class RegisterScreen: AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.log_button -> {
                 Toast.makeText(applicationContext,"Login screen", Toast.LENGTH_SHORT).show()
-//                val intentLog = Intent(applicationContext, LoginScreen::class.java)
-//                startActivity(intentLog)
-                val builder = SMTAppInboxRequestBuilder.Builder(SMTInboxDataType.ALL)
-                .setCallback(object : SMTInboxCallback {
-                    override fun onInboxFail() {
-                    }
+            // val intentLog = Intent(applicationContext, LoginScreen::class.java)
+            //  startActivity(intentLog)
 
-                    override fun onInboxProgress() {
-                    }
-
-                    override fun onInboxSuccess(messages: MutableList<SMTInboxMessageData>?) {
-                        Log.v("storage data", messages.toString())
-
-                        Toast.makeText(applicationContext,"usercredentilas saved"+messages, Toast.LENGTH_SHORT).show()
-                    }
-                })
-                .setCategory(arrayListOf("cat1"))
-                .setLimit(10).build();
-                val smartechAppInbox = SmartechAppInbox.getInstance(WeakReference(applicationContext))
-                smartechAppInbox.getAppInboxMessages(builder)
             }
             R.id.reg_button -> postData()
         }
@@ -108,8 +92,8 @@ class RegisterScreen: AppCompatActivity(), View.OnClickListener {
 
             var user = User(name = textEditTextUser.text.toString().trim(),
                 password = textEditTextPassword1.text.toString().trim())
-
             dbHelper.addUser(user)
+            Smartech.getInstance(WeakReference(applicationContext)).login(textEditTextUser.text.toString())
 
             //println("Record saved $user")
 

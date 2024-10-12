@@ -4,8 +4,10 @@ import android.app.Application
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.IntentFilter
+import android.os.Build
 import android.text.TextUtils
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.netcore.android.Smartech
@@ -17,6 +19,7 @@ import java.lang.ref.WeakReference
 class MainApplication:Application() {
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
         //initialise the sdk
@@ -25,22 +28,21 @@ class MainApplication:Application() {
         Smartech.getInstance(WeakReference(this)).setDebugLevel(9)
         //track app and install
         Smartech.getInstance(WeakReference(this)).trackAppInstallUpdateBySmartech()
-        Smartech.getInstance(WeakReference(this)).trackAppInstall()
+
 
         //firebase token fetch
 
 
-          try {
-              val smartPush = SmartPush.getInstance(WeakReference(applicationContext))
-              smartPush.fetchAlreadyGeneratedTokenFromFCM()
-          } catch (e: Exception) {
-              Log.e(TAG, "Fetching FCM token failed.")
-          }
+
         fetchFcmToken()
 
-           val deeplinkReceiver = DeeplinkReceiver()
-            val filter = IntentFilter("com.smartech.EVENT_PN_INBOX_CLICK")
-            registerReceiver(deeplinkReceiver, filter)
+        val deeplinkReceiver = DeeplinkReceiver()
+        val filter = IntentFilter("com.smartech.EVENT_PN_INBOX_CLICK")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            this.registerReceiver(deeplinkReceiver, filter, RECEIVER_EXPORTED)
+        } else {
+            this.registerReceiver(deeplinkReceiver, filter)
+        }
 
 
 

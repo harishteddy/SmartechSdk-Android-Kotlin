@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.netcore.smarttechdemo">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <application
         android:name=".MainApplication"
@@ -47,10 +48,10 @@
 
 
 
-<!--intacia panel app harish native appid-->
+<!--netcorepx_row  panel app  kotlin appid-->
         <meta-data
             android:name="SMT_APP_ID"
-            android:value="df1558cddfe6737d68f7c6cf0bc02225" />
+            android:value="bc27f59e25ec1dcc74f343111fb05190" />
         <meta-data
             android:name="SMT_IS_AUTO_FETCHED_LOCATION"
             android:value="1" />
