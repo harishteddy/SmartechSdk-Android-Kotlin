@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,14 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        android:gravity="center">
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
-            android:src="@drawable/img_netcore"/>
+            android:src="@drawable/img_netcore"
+            android:contentDescription="@string/img_netcore_description"/>
 
         <EditText
             android:id="@+id/username_field"
@@ -28,11 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:hint="@string/useremail"
-            android:textColorHint="	#ff8000"
-            android:inputType="text"
+            android:textColorHint="#ff8000"
+            android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:textColor="#4d4dff"
-            />
+            android:textColor="#4d4dff" />
 
         <EditText
             android:id="@+id/password_field"
@@ -40,31 +40,29 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:hint="@string/password"
-            android:textColorHint="	#ff8000"
+            android:textColorHint="#ff8000"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:textColor="#4d4dff"
-            />
+            android:textColor="#4d4dff" />
+
         <CheckBox
+            android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RememberMe"
+            android:text="Remember Me"
             android:textColor="#ff8000"
             android:checked="true"
-            android:id="@+id/checkBox"
-            android:layout_marginTop="4dp">
-
-        </CheckBox>
+            android:layout_marginTop="4dp"/>
 
         <Button
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="30dp"
             android:background="@drawable/button_background"
-            android:backgroundTint="#ff8000"
-            android:text="@string/login"/>
+            android:text="@string/login"
+            android:textColor="#FFFFFF"/>
 
         <TextView
             android:id="@+id/reg_text"
@@ -80,12 +78,183 @@
             android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
             android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="30dp"
             android:background="@drawable/button_background"
-            android:backgroundTint="#ff8000"
-            android:text="@string/register"/>
+            android:text="@string/register"
+            android:textColor="#FFFFFF"/>
 
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bgradient"
+        android:padding="20dp"
+        tools:context=".MainActivity">
+
+        <LinearLayout
+            android:id="@+id/linearBody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/img_netcore"/>
+
+            <EditText
+                android:id="@+id/username_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:hint="@string/useremail"
+                android:textColorHint="	#ff8000"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="#4d4dff"
+                />
+
+            <EditText
+                android:id="@+id/password_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="@string/password"
+                android:textColorHint="	#ff8000"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="#4d4dff"
+                />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RememberMe"
+                android:textColor="#ff8000"
+                android:checked="true"
+                android:id="@+id/checkBox"
+                android:layout_marginTop="4dp">
+
+            </CheckBox>
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="#ff8000"
+                android:text="@string/login"/>
+
+            <TextView
+                android:id="@+id/reg_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:textColor="#ff8000"
+                android:text="Not yet registered? Click here:"
+                android:textAlignment="center"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="#ff8000"
+                android:text="@string/register"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>-->

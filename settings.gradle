@@ -4,6 +4,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://artifacts.netcore.co.in/artifactory/android' }
+
         jcenter() // Warning: this repository is going to shut down soon
     }
 }

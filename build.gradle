@@ -3,7 +3,6 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://artifacts.netcore.co.in/artifactory/android' }
 
     }
     dependencies {

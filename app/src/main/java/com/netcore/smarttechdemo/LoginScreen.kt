@@ -40,6 +40,320 @@ class LoginScreen : AppCompatActivity(), View.OnClickListener {
         initListeners()
         initObjects()
         loadUserCredentials()
+    }
+
+    private fun initViews() {
+        textEditTextUser = findViewById(R.id.username_field)
+        textEditTextPassword = findViewById(R.id.password_field)
+        btnLogin = findViewById(R.id.login_button)
+        checkBox = findViewById(R.id.checkBox)
+        btnRegister = findViewById(R.id.register_button)
+        linearBody = findViewById(R.id.linearBody)
+    }
+
+    private fun initListeners() {
+        btnLogin.setOnClickListener(this)
+        btnRegister.setOnClickListener(this)
+    }
+
+    private fun initObjects() {
+        dbHelper = DbHelper(this)
+        inputValidation = InputValidation(this)
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    }
+
+    private fun loadUserCredentials() {
+        val savedEmail = sharedPreferences.getString(KEY_EMAIL, null)
+        val savedPassword = sharedPreferences.getString(KEY_PASSWORD, null)
+        val isRemembered = sharedPreferences.getBoolean(KEY_CHECKBOX, false)
+
+        if (isRemembered && !savedEmail.isNullOrEmpty() && !savedPassword.isNullOrEmpty()) {
+            textEditTextUser.setText(savedEmail)
+            textEditTextPassword.setText(savedPassword)
+            checkBox.isChecked = true
+        }
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.login_button -> verifyFromDB()
+            R.id.register_button -> navigateToRegisterScreen()
+        }
+    }
+
+    private fun navigateToRegisterScreen() {
+        Smartech.getInstance(WeakReference(this)).trackEvent("opened_app", hashMapOf())
+        startActivity(Intent(this, RegisterScreen::class.java))
+    }
+
+    private fun verifyFromDB() {
+        if (!inputValidation.isTextFilled(textEditTextUser, getString(R.string.error_message_nofill_name)) ||
+            !inputValidation.isTextFilled(textEditTextPassword, getString(R.string.error_message_nofill_pass))
+        ) {
+            return
+        }
+
+        if (dbHelper.logCheckUser(
+                textEditTextUser.text.toString().trim(),
+                textEditTextPassword.text.toString().trim()
+            )
+        ) {
+            saveUserCredentials()
+            navigateToMainActivity()
+        } else {
+            Snackbar.make(linearBody, getString(R.string.error_message_invalid), Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private fun saveUserCredentials() {
+        val editor = sharedPreferences.edit()
+        if (checkBox.isChecked) {
+            editor.putString(KEY_EMAIL, textEditTextUser.text.toString())
+            editor.putString(KEY_PASSWORD, textEditTextPassword.text.toString())
+            editor.putBoolean(KEY_CHECKBOX, true)
+            Toast.makeText(this, "User credentials saved", Toast.LENGTH_SHORT).show()
+
+            // Perform login actions
+            Smartech.getInstance(WeakReference(applicationContext)).login(textEditTextUser.text.toString())
+            Hansel.getUser().setUserId(textEditTextUser.text.toString())
+        } else {
+            editor.remove(KEY_EMAIL)
+            editor.remove(KEY_PASSWORD)
+            editor.putBoolean(KEY_CHECKBOX, false)
+        }
+        editor.apply()
+    }
+
+    private fun navigateToMainActivity() {
+        val mainIntent = Intent(this, MainActivity::class.java).apply {
+            putExtra("uname", textEditTextUser.text.toString().trim())
+        }
+        textEditTextUser.text.clear()
+        textEditTextPassword.text.clear()
+        startActivity(mainIntent)
+        finish()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*package com.netcore.smarttechdemo
+
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.netcore.android.Smartech
+import io.hansel.hanselsdk.Hansel
+import java.lang.ref.WeakReference
+
+class LoginScreen : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var linearBody: LinearLayout
+    private lateinit var textEditTextUser: EditText
+    private lateinit var textEditTextPassword: EditText
+    private lateinit var btnLogin: Button
+    private lateinit var checkBox: CheckBox
+    private lateinit var btnRegister: Button
+    private lateinit var inputValidation: InputValidation
+    private lateinit var dbHelper: DbHelper
+    private lateinit var sharedPreferences: SharedPreferences
+
+    companion object {
+        const val SHARED_PREF_NAME = "Shared_pref"
+        const val KEY_EMAIL = "Email"
+        const val KEY_PASSWORD = "password"
+        const val KEY_CHECKBOX = "CHECKBOX"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.login_screen)
+        supportActionBar?.hide()
+
+        initViews()
+        initListeners()
+        initObjects()
+        loadUserCredentials()
 
     }
 
@@ -116,7 +430,7 @@ class LoginScreen : AppCompatActivity(), View.OnClickListener {
 
 
     //this function need to handle at the time logout:
-/*    private fun logout() {
+*//*    private fun logout() {
         val editor = sharedPreferences.edit()
         editor.clear() // Clear all saved data
         editor.apply()
@@ -130,7 +444,7 @@ class LoginScreen : AppCompatActivity(), View.OnClickListener {
         // Redirect to login screen if needed
         startActivity(Intent(this, LoginScreen::class.java))
         finish()
-    }*/
+    }*//*
 
 
     private fun saveUserCredentials() {
@@ -161,7 +475,7 @@ class LoginScreen : AppCompatActivity(), View.OnClickListener {
         startActivity(mainIntent)
         finish()
     }
-}
+}*/
 
 
 

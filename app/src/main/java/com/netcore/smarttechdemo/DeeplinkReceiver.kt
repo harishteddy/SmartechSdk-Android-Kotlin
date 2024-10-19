@@ -8,30 +8,53 @@ import android.util.Log
 import com.netcore.android.SMTBundleKeys
 
 class DeeplinkReceiver : BroadcastReceiver() {
+
     override fun onReceive(context: Context?, intent: Intent?) {
-        val bundleExtra = intent?.extras
-        bundleExtra?.let {
-            bundleExtra.containsKey(SMTBundleKeys.SMT_BUNDLE_KEY_CLICK_DEEPLINK)
-                    val deepLinkvalue = bundleExtra.getString(SMTBundleKeys.SMT_KEY_DEEPLINK)
-                    val customPayload = it.getString(SMTBundleKeys.SMT_KEY_CUSTOM_PAYLOAD)
-                    Log.v("harish deeplink", deepLinkvalue.toString())
+        intent?.extras?.let { bundleExtra ->
+            // Check if the bundle contains a deeplink key
+            if (bundleExtra.containsKey(SMTBundleKeys.SMT_BUNDLE_KEY_CLICK_DEEPLINK)) {
+                val deepLinkValue = bundleExtra.getString(SMTBundleKeys.SMT_KEY_DEEPLINK)
+                val customPayload = bundleExtra.getString(SMTBundleKeys.SMT_KEY_CUSTOM_PAYLOAD)
 
-                if (deepLinkvalue != null && deepLinkvalue.isNotEmpty()) {
-                        if (deepLinkvalue.equals("sampleapp://profile")) {
-                            openprofile(context)
-                        } else if (deepLinkvalue.equals("sampleapp://login")) {
-                            openprofile(context)
-                        } else {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deepLinkvalue))
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            context?.startActivity(intent)
-                        }
-                    } }
-    }
-    private fun openprofile(context: Context?) {
-        val displayScreen = Intent(context, RegisterScreen::class.java)
-        displayScreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context!!.startActivity(displayScreen)
+                Log.v("Harish Deeplink", "Deeplink: $deepLinkValue, Payload: $customPayload")
+
+                deepLinkValue?.let { link ->
+                    if (link.isNotEmpty()) {
+                        handleDeeplink(context, link)
+                    }
+                }
+            }
+        }
     }
 
+    private fun handleDeeplink(context: Context?, deeplink: String) {
+        when (deeplink) {
+            "sampleapp://profile" -> openProfile(context)
+            "sampleapp://login" -> openLogin(context)
+            else -> {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deeplink)).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                context?.startActivity(intent)
+            }
+        }
+    }
+
+    private fun openProfile(context: Context?) {
+        context?.let {
+            val displayScreen = Intent(it, RegisterScreen::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            it.startActivity(displayScreen)
+        }
+    }
+
+    private fun openLogin(context: Context?) {
+        context?.let {
+            val displayScreen = Intent(it, LoginScreen::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            it.startActivity(displayScreen)
+        }
+    }
 }
